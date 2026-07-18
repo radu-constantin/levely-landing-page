@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="nocturne.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&amp;family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&amp;display=swap" rel="stylesheet">
+<style>
+  html, body { height: 100%; }
+  body { margin: 0; overflow-x: hidden; }
+  @keyframes lv-wobble { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @keyframes lv-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+  @keyframes lv-rise {
+    0%   { transform: translateY(0) scale(0.6); opacity: 0; }
+    12%  { opacity: 0.7; }
+    80%  { opacity: 0.5; }
+    100% { transform: translateY(-300px) scale(1); opacity: 0; }
+  }
+  @keyframes lv-aura { 0%,100% { opacity: 0.45; } 50% { opacity: 0.85; } }
+  @keyframes lv-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  @keyframes lv-spin-rev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+  @keyframes lv-twinkle { 0%,100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 1; transform: scale(1); } }
+  @keyframes lv-mote {
+    0%   { transform: translateY(8px) scale(0.4); opacity: 0; }
+    25%  { opacity: 1; }
+    100% { transform: translateY(-84px) scale(1); opacity: 0; }
+  }
+  @keyframes lv-drift1 { from { transform: translate3d(0,0,0); } to { transform: translate3d(-340px,-680px,0); } }
+  @keyframes lv-drift2 { from { transform: translate3d(0,0,0); } to { transform: translate3d(420px,-900px,0); } }
+  @keyframes lv-fadein { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes lv-breathe { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+</style>
+</helmet>
+<div style="position:relative;min-height:100vh;overflow:hidden;background:radial-gradient(135% 108% at 50% 2%, #2a1e52 0%, #1c1440 34%, #120c2d 64%, #090619 100%);">
+
+  <!-- starfield layers -->
+  <div aria-hidden="true" style="position:absolute;left:-340px;top:-680px;right:-340px;bottom:-40px;pointer-events:none;will-change:transform;background-repeat:repeat;background-size:340px 340px;background-image:radial-gradient(1px 1px at 24px 32px, rgba(255,250,235,.9), transparent), radial-gradient(1px 1px at 90px 120px, rgba(220,220,255,.8), transparent), radial-gradient(1.6px 1.6px at 160px 60px, rgba(255,255,255,.75), transparent), radial-gradient(1px 1px at 210px 178px, rgba(200,190,255,.7), transparent), radial-gradient(1px 1px at 262px 40px, rgba(255,245,220,.6), transparent), radial-gradient(1.4px 1.4px at 300px 220px, rgba(235,230,255,.8), transparent), radial-gradient(1px 1px at 120px 262px, rgba(255,255,255,.6), transparent), radial-gradient(1px 1px at 40px 205px, rgba(210,200,255,.5), transparent);animation:lv-drift1 180s linear infinite;"></div>
+  <div aria-hidden="true" style="position:absolute;left:-420px;top:-900px;right:-420px;bottom:-40px;pointer-events:none;opacity:.7;will-change:transform;background-repeat:repeat;background-size:420px 420px;background-image:radial-gradient(2px 2px at 60px 90px, rgba(180,255,220,.5), transparent), radial-gradient(1.6px 1.6px at 330px 160px, rgba(255,250,235,.7), transparent), radial-gradient(2.2px 2.2px at 200px 300px, rgba(200,180,255,.5), transparent), radial-gradient(1.5px 1.5px at 380px 380px, rgba(255,255,255,.6), transparent), radial-gradient(2px 2px at 100px 360px, rgba(245,215,140,.4), transparent);animation:lv-drift2 260s linear infinite;"></div>
+
+  <!-- ambient blooms -->
+  <div aria-hidden="true" style="position:absolute;left:22%;top:52%;width:640px;height:640px;transform:translate(-50%,-50%);pointer-events:none;background:radial-gradient(closest-side, rgba(51,221,133,.20), rgba(51,221,133,.05) 55%, transparent 72%);"></div>
+  <div aria-hidden="true" style="position:absolute;left:70%;top:24%;width:560px;height:560px;transform:translate(-50%,-50%);pointer-events:none;background:radial-gradient(closest-side, rgba(150,116,236,.18), transparent 70%);"></div>
+
+  <!-- vignette -->
+  <div aria-hidden="true" style="position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 260px 60px rgba(6,4,18,.7);"></div>
+
+  <div style="position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;padding:clamp(20px,4vw,40px) clamp(20px,5vw,64px);">
+
+    <!-- header -->
+    <header style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex:none;">
+      <div style="display:flex;align-items:center;gap:11px;">
+        <span aria-hidden="true" style="font-size:16px;color:#f2cf83;text-shadow:0 0 12px rgba(242,207,131,.7);">✦</span>
+        <span style="font-family:'Cinzel',serif;font-weight:600;font-size:22px;letter-spacing:0.14em;background:linear-gradient(180deg,#fbe6bd,#e0b466);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:0 0 24px rgba(242,207,131,.35);">LEVELY</span>
+      </div>
+      <span style="font-family:'Cinzel',serif;font-weight:600;letter-spacing:0.16em;font-size:10px;padding:6px 13px;border-radius:99px;border:1px solid rgba(242,207,131,.4);color:#f2cf83;background:rgba(242,207,131,.06);">LVL&nbsp;I · FOUNDING</span>
+    </header>
+
+    <!-- hero -->
+    <main style="flex:1;display:grid;grid-template-columns:minmax(0,300px) minmax(0,520px);gap:clamp(40px,7vw,104px);align-items:center;justify-content:center;padding:clamp(28px,5vh,56px) 0;">
+
+      <!-- LEFT: the potion -->
+      <section style="display:flex;flex-direction:column;align-items:center;gap:26px;justify-self:center;">
+        <div style="display:flex;align-items:center;gap:9px;font-family:'Cinzel',serif;font-weight:500;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:#c7b8ef;">
+          <span style="color:#5ff0a3;">◇</span> Now training · Programming
+        </div>
+
+        <!-- potion stage -->
+        <div style="position:relative;width:clamp(150px,42vw,178px);animation:lv-breathe 7s ease-in-out infinite;">
+
+          <!-- arcane summoning ring -->
+          <div aria-hidden="true" style="position:absolute;left:50%;top:50%;width:186%;aspect-ratio:1;transform:translate(-50%,-50%);animation:lv-spin 70s linear infinite;">
+            <svg viewBox="0 0 200 200" width="100%" height="100%" style="display:block;">
+              <circle cx="100" cy="100" r="96" fill="none" stroke="rgba(242,207,131,.32)" stroke-width="0.7" stroke-dasharray="1.5 7"></circle>
+              <circle cx="100" cy="100" r="88" fill="none" stroke="rgba(242,207,131,.14)" stroke-width="0.5"></circle>
+            </svg>
+          </div>
+          <div aria-hidden="true" style="position:absolute;left:50%;top:50%;width:150%;aspect-ratio:1;transform:translate(-50%,-50%);animation:lv-spin-rev 95s linear infinite;">
+            <svg viewBox="0 0 200 200" width="100%" height="100%" style="display:block;">
+              <circle cx="100" cy="100" r="96" fill="none" stroke="rgba(95,240,163,.28)" stroke-width="0.6" stroke-dasharray="0.6 11"></circle>
+            </svg>
+          </div>
+
+          <!-- glow aura -->
+          <div aria-hidden="true" style="position:absolute;left:50%;top:54%;width:150%;height:78%;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(closest-side, rgba(51,221,133,.5), rgba(51,221,133,.12) 56%, transparent 74%);animation:lv-aura 5.5s ease-in-out infinite;will-change:opacity;"></div>
+
+          <!-- floating sparkle motes -->
+          <span aria-hidden="true" style="position:absolute;left:-20px;top:60%;font-size:12px;font-weight:600;color:#8df2bd;font-family:'Cinzel',serif;text-shadow:0 0 10px rgba(51,221,133,.9);animation:lv-mote 4.6s ease-in-out infinite;">+12 XP</span>
+          <span aria-hidden="true" style="position:absolute;right:-22px;top:42%;font-size:12px;font-weight:600;color:#f5d98b;font-family:'Cinzel',serif;text-shadow:0 0 10px rgba(242,207,131,.9);animation:lv-mote 5.6s ease-in-out 1.8s infinite;">+8 XP</span>
+          <span aria-hidden="true" style="position:absolute;left:-8px;top:34%;font-size:13px;color:#f2cf83;text-shadow:0 0 10px rgba(242,207,131,.9);animation:lv-twinkle 3.4s ease-in-out .4s infinite;">✦</span>
+          <span aria-hidden="true" style="position:absolute;right:-4px;top:66%;font-size:11px;color:#7ef2b6;text-shadow:0 0 10px rgba(95,240,163,.9);animation:lv-twinkle 4s ease-in-out 1.2s infinite;">✧</span>
+          <span aria-hidden="true" style="position:absolute;right:12%;top:12%;font-size:10px;color:#f5d98b;text-shadow:0 0 8px rgba(242,207,131,.9);animation:lv-twinkle 3.1s ease-in-out 2.1s infinite;">✦</span>
+
+          <!-- cork -->
+          
+          
+
+          <!-- glass -->
+          <div style="position:relative;z-index:2;width:100%;aspect-ratio:178/452;border-radius:999px;overflow:hidden;border:1.5px solid rgba(232,224,255,.42);background:linear-gradient(180deg, rgba(150,116,236,.4) 0%, rgba(90,80,150,.24) 30%, rgba(28,26,58,.5) 58%, rgba(18,18,44,.62) 100%);box-shadow:0 0 54px rgba(51,221,133,.34), 0 0 120px rgba(51,221,133,.16), inset 0 2px 18px rgba(255,255,255,.16), inset 0 -28px 56px rgba(0,0,0,.4);">
+
+            <!-- glass vertical highlight -->
+            <div aria-hidden="true" style="position:absolute;top:6%;left:20%;width:12%;height:74%;border-radius:99px;background:linear-gradient(180deg, rgba(255,255,255,.35), rgba(255,255,255,.05) 60%, transparent);filter:blur(1px);"></div>
+
+            <!-- liquid -->
+            <div style="{{ liquidStyle }}">
+              <!-- wobbling surface -->
+              <div aria-hidden="true" style="position:absolute;top:-28px;left:0;width:200%;height:32px;animation:lv-wobble 7s ease-in-out infinite alternate;">
+                <svg width="100%" height="32" viewBox="0 0 400 32" preserveAspectRatio="none" style="display:block;">
+                  <path d="M0 13 C 50 2, 150 24, 200 13 C 250 2, 350 24, 400 13 L400 32 L0 32 Z" fill="#35dd85"></path>
+                </svg>
+              </div>
+              <!-- glowing meniscus -->
+              
+
+              <!-- bubbles + inner sparkles -->
+              <span aria-hidden="true" style="position:absolute;bottom:8%;left:28%;width:16px;height:16px;border-radius:50%;background:rgba(20,44,32,.45);animation:lv-rise 6.5s ease-in .2s infinite;"></span>
+              <span aria-hidden="true" style="position:absolute;bottom:8%;left:58%;width:10px;height:10px;border-radius:50%;background:rgba(20,44,32,.4);animation:lv-rise 5.2s ease-in 1.4s infinite;"></span>
+              <span aria-hidden="true" style="position:absolute;bottom:8%;left:44%;width:7px;height:7px;border-radius:50%;background:rgba(190,255,220,.55);box-shadow:0 0 6px rgba(95,240,163,.8);animation:lv-rise 4.4s ease-in .9s infinite;"></span>
+              <span aria-hidden="true" style="position:absolute;bottom:8%;left:70%;width:6px;height:6px;border-radius:50%;background:rgba(245,217,139,.6);box-shadow:0 0 6px rgba(242,207,131,.8);animation:lv-rise 5.8s ease-in 2.3s infinite;"></span>
+              <span aria-hidden="true" style="position:absolute;bottom:8%;left:18%;width:5px;height:5px;border-radius:50%;background:rgba(190,255,220,.5);animation:lv-rise 4.9s ease-in 3.1s infinite;"></span>
+            </div>
+          </div>
+
+          <!-- ground reflection -->
+          <div aria-hidden="true" style="position:absolute;left:50%;bottom:-26px;width:70%;height:24px;transform:translateX(-50%);border-radius:50%;background:radial-gradient(closest-side, rgba(51,221,133,.4), transparent 72%);filter:blur(3px);"></div>
+        </div>
+
+        <!-- skill chips (inventory) -->
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px;max-width:280px;margin-top:8px;">
+          <sc-for list="{{ skills }}" as="skill" hint-placeholder-count="4">
+            <span style="display:inline-flex;align-items:center;gap:7px;padding:5px 12px;border-radius:99px;background:rgba(242,207,131,.05);border:1px solid rgba(242,207,131,.18);font-size:12px;color:#e6e0f5;">
+              <span style="color:#5ff0a3;font-size:9px;">◆</span>
+              {{ skill.name }}
+              <span style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.06em;color:#f2cf83;font-variant-numeric:tabular-nums;">LV&nbsp;{{ skill.level }}</span>
+            </span>
+          </sc-for>
+        </div>
+      </section>
+
+      <!-- RIGHT: pitch + capture -->
+      <section style="min-width:0;max-width:520px;">
+        <div style="font-family:'Cinzel',serif;font-weight:500;font-size:12px;letter-spacing:0.24em;text-transform:uppercase;color:#f2cf83;margin-bottom:18px;">A focus timer for main characters</div>
+
+        <h1 style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(44px,6vw,72px);line-height:0.98;letter-spacing:-0.01em;margin:0 0 20px;color:#f6f1ff;text-shadow:0 0 40px rgba(150,116,236,.35);">Level up your<br><em style="font-style:italic;font-weight:600;color:#ffe9b8;">real-life</em> skills.</h1>
+
+        <p style="font-size:clamp(17px,2vw,20px);line-height:1.4;font-weight:500;color:#a8e9c6;margin:0 0 16px;">You're the main character. Start leveling.</p>
+
+        <p style="font-size:15px;line-height:1.64;color:#b8b2cf;max-width:47ch;margin:0 0 30px;">Every other focus app grows you a little cartoon plant while you work. Cute. But the plant can't play guitar. Levely turns each focus session into XP for the skills you <em style="font-style:italic;color:#8df2bd;">actually</em> want to get good at — the reward is you.</p>
+
+        <!-- capture -->
+        <div style="max-width:460px;">
+          <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border-radius:14px;background:rgba(51,221,133,.08);border:1px solid rgba(51,221,133,.35);box-shadow:0 0 44px rgba(51,221,133,.16);animation:lv-fadein .5s ease both;">
+              <span style="flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(150deg,#5ff0a3,#22c072);color:#08221a;font-size:17px;font-weight:700;box-shadow:0 0 16px rgba(51,221,133,.6);">✓</span>
+              <div>
+                <div style="font-family:'Cormorant Garamond',serif;font-weight:600;font-size:20px;color:#eafff3;margin-bottom:2px;">You're in. Welcome, adventurer.</div>
+                <p style="margin:0;font-size:13px;line-height:1.55;color:#9fd8b9;">+50 XP for good taste. Founding access lands in your inbox at launch — I'll write to you from the trenches until then.</p>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+            <div>
+              <form onSubmit="{{ handleSubmit }}" style="display:flex;gap:10px;align-items:stretch;">
+                <input ref="{{ emailRef }}" type="email" name="email" required="" placeholder="you@wherever.com" aria-label="Email address" style="flex:1;min-width:0;min-height:52px;padding:0 16px;font-size:15px;color:#eef1fb;background:rgba(255,255,255,.045);border:1px solid rgba(242,207,131,.25);border-radius:12px;outline:none;caret-color:#5ff0a3;" style-focus="border-color:#5ff0a3;box-shadow:0 0 0 3px rgba(51,221,133,.18);">
+                <button type="submit" disabled="{{ submitting }}" style="flex:none;min-height:52px;padding:0 22px;white-space:nowrap;font-family:'Cinzel',serif;font-weight:600;letter-spacing:0.04em;font-size:14px;color:#08221a;background:linear-gradient(150deg,#5ff0a3,#22c072);border:none;border-radius:12px;cursor:pointer;box-shadow:0 6px 24px rgba(51,221,133,.35);" style-hover="filter:brightness(1.07);box-shadow:0 8px 30px rgba(51,221,133,.55);" style-active="filter:brightness(.97);">{{ buttonLabel }}</button>
+              </form>
+              <sc-if value="{{ error }}" hint-placeholder-val="{{ false }}">
+                <p style="margin:10px 0 0;font-size:12.5px;color:#ffb4a8;">{{ error }}</p>
+              </sc-if>
+              <p style="margin:14px 0 0;font-size:12.5px;line-height:1.55;color:#8a84a2;"><span style="color:#c7c1dd;">Follow the build, get founding access at launch.</span> <span style="color:#f2cf83;">{{ scarcityLine }}</span> It's just me — no spam, no VC deck, no plant.</p>
+            </div>
+          </sc-if>
+        </div>
+
+        <!-- footer links -->
+        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:10px 20px;margin-top:34px;font-size:13px;">
+          <a href="{{ articleUrl }}" style="color:#8df2bd;text-decoration:none;" style-hover="text-decoration:underline;">Read the Day&nbsp;1 journal →</a>
+          <span style="color:#565073;">✦</span>
+          <a href="{{ handleHref }}" style="color:#9d97b8;text-decoration:none;" style-hover="color:#e6e0f5;">{{ handle }} on X</a>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1180,&quot;height&quot;:800},&quot;liquidLevel&quot;:{&quot;editor&quot;:&quot;range&quot;,&quot;default&quot;:60,&quot;min&quot;:0,&quot;max&quot;:100,&quot;unit&quot;:&quot;%&quot;,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Vial&quot;},&quot;formEndpoint&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Capture&quot;},&quot;foundingSpots&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:100,&quot;min&quot;:0,&quot;max&quot;:9999,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;Copy&quot;},&quot;handle&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;@levely&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Copy&quot;},&quot;articleUrl&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;#&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Copy&quot;}}">
+class Component extends DCLogic {
+  state = { submitted: false, submitting: false, error: "" };
+  emailRef = React.createRef();
+
+  handleSubmit = (e) => {
+    e.preventDefault();
+    const val = ((this.emailRef.current && this.emailRef.current.value) || "").trim();
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(val)) {
+      this.setState({ error: "That doesn't look like an email. Try again, adventurer." });
+      return;
+    }
+    const endpoint = (this.props.formEndpoint || "").trim();
+    if (!endpoint) {
+      console.warn("[Levely] No formEndpoint set — email not stored. Paste your capture endpoint into the formEndpoint prop.");
+      this.setState({ submitted: true, error: "" });
+      return;
+    }
+    this.setState({ submitting: true, error: "" });
+    fetch(endpoint, {
+      method: "POST",
+      headers: { "Accept": "application/json" },
+      body: new URLSearchParams({ email: val }),
+    })
+      .then((r) => {
+        if (!r.ok) throw new Error("bad status " + r.status);
+        this.setState({ submitted: true, submitting: false });
+      })
+      .catch(() => {
+        this.setState({ submitting: false, error: "Something glitched on my end — try again in a sec." });
+      });
+  };
+
+  renderVals() {
+    const level = Math.max(0, Math.min(100, this.props.liquidLevel ?? 60));
+    const spots = this.props.foundingSpots ?? 100;
+    const handle = this.props.handle ?? "@levely";
+    const articleUrl = this.props.articleUrl ?? "#";
+
+    const liquidStyle = "position:absolute;left:0;right:0;bottom:-8px;height:calc(" + level + "% + 8px);"
+      + "background:linear-gradient(180deg,#37e089 0%,#28c674 58%,#1e9d5e 100%);"
+      + "box-shadow:0 -6px 30px rgba(51,221,133,.5);overflow:visible;"
+      + "animation:lv-bob 8s ease-in-out infinite;";
+
+    const skills = [
+      { name: "Guitar", level: 4 },
+      { name: "Programming", level: 7 },
+      { name: "Writing", level: 6 },
+      { name: "French", level: 2 },
+    ];
+
+    return {
+      submitted: this.state.submitted,
+      notSubmitted: !this.state.submitted,
+      submitting: this.state.submitting,
+      buttonLabel: this.state.submitting ? "Casting…" : "Get founding access",
+      error: this.state.error,
+      emailRef: this.emailRef,
+      handleSubmit: this.handleSubmit,
+      liquidStyle,
+      skills,
+      scarcityLine: spots > 0 ? ("Only " + spots + " founding spots.") : "",
+      handle,
+      handleHref: "https://x.com/" + handle.replace(/^@/, ""),
+      articleUrl,
+    };
+  }
+}
+</script>
+</body>
+</html>

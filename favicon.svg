@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <defs>
+    <!-- Background -->
+    <radialGradient id="bgGlow" cx="50%" cy="45%" r="70%">
+      <stop offset="0%" stop-color="#1b3354"/>
+      <stop offset="100%" stop-color="#171030"/>
+    </radialGradient>
+
+    <!-- Glass -->
+    <linearGradient id="glass" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#7a68bf" stop-opacity=".75"/>
+      <stop offset="100%" stop-color="#3b2c73" stop-opacity=".15"/>
+    </linearGradient>
+
+    <!-- Liquid -->
+    <linearGradient id="liquid" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3ff28d"/>
+      <stop offset="100%" stop-color="#28b866"/>
+    </linearGradient>
+
+    <!-- Green glow -->
+    <filter id="greenGlow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="10" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Soft glow -->
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="4"/>
+    </filter>
+
+    <!-- Clip -->
+    <clipPath id="capsuleClip">
+      <rect x="84" y="26" width="88" height="204" rx="44"/>
+    </clipPath>
+  </defs>
+
+  <!-- Background -->
+  <rect width="256" height="256" rx="56" fill="url(#bgGlow)"/>
+
+  <!-- Stars -->
+  <g fill="#ffffff" opacity=".7">
+    <circle cx="32" cy="46" r="1.6"/>
+    <circle cx="52" cy="198" r="1.3"/>
+    <circle cx="224" cy="58" r="1.5"/>
+    <circle cx="205" cy="210" r="1.2"/>
+    <circle cx="190" cy="38" r="1"/>
+    <circle cx="70" cy="84" r="1"/>
+    <circle cx="215" cy="118" r="1.4"/>
+    <circle cx="164" cy="222" r="1"/>
+  </g>
+
+  <!-- Halo -->
+  <circle
+          cx="128"
+          cy="128"
+          r="76"
+          fill="none"
+          stroke="#d4b55f"
+          stroke-opacity=".22"
+          stroke-width="1.5"/>
+
+  <circle
+          cx="128"
+          cy="128"
+          r="92"
+          fill="none"
+          stroke="#d4b55f"
+          stroke-opacity=".4"
+          stroke-width="1.5"
+          stroke-dasharray="2 10"/>
+
+  <!-- Capsule glow -->
+  <rect
+          x="84"
+          y="26"
+          width="88"
+          height="204"
+          rx="44"
+          fill="#48f09d"
+          opacity=".15"
+          filter="url(#greenGlow)"/>
+
+  <!-- Liquid -->
+  <g clip-path="url(#capsuleClip)">
+    <path
+            d="
+      M84 118
+      C104 114 122 120 144 120
+      C158 120 167 118 172 116
+      L172 232
+      L84 232
+      Z"
+            fill="url(#liquid)"
+            filter="url(#greenGlow)"/>
+
+    <!-- Floating particles -->
+    <circle cx="137" cy="154" r="3" fill="#baffc8" opacity=".6"/>
+    <circle cx="153" cy="136" r="2.6" fill="#f4ff94" opacity=".7"/>
+  </g>
+
+  <!-- Glass -->
+  <rect
+          x="84"
+          y="26"
+          width="88"
+          height="204"
+          rx="44"
+          fill="url(#glass)"
+          stroke="#b9a8ff"
+          stroke-width="2"/>
+
+  <!-- Highlight -->
+  <rect
+          x="101"
+          y="42"
+          width="12"
+          height="94"
+          rx="6"
+          fill="#ffffff"
+          opacity=".32"
+          filter="url(#softGlow)"/>
+
+  <!-- Spark -->
+  <path
+          d="M79 113l3-6 3 6 6 3-6 3-3 6-3-6-6-3z"
+          fill="#f8f38a"
+          filter="url(#softGlow)"/>
+
+  <!-- Bottom glow -->
+  <ellipse
+          cx="128"
+          cy="236"
+          rx="20"
+          ry="4"
+          fill="#4df19a"
+          opacity=".4"
+          filter="url(#softGlow)"/>
+</svg>
