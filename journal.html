@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>The Journal — Levely</title>
+  <meta name="description" content="Building Levely in public. One solo dev, one iOS app, one hackathon deadline — what I build, what breaks, and what I got wrong the first time.">
+
+  <!-- Open Graph / social -->
+  <meta property="og:title" content="The Journal — Levely">
+  <meta property="og:description" content="Building Levely in public. One solo dev, one iOS app, one hackathon deadline — what I build, what breaks, and what I got wrong the first time.">
+  <meta property="og:type" content="website">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="stage stage-page">
+
+    <!-- starfield layers -->
+    <div class="starfield starfield-1" aria-hidden="true"></div>
+    <div class="starfield starfield-2" aria-hidden="true"></div>
+
+    <!-- ambient blooms -->
+    <div class="bloom bloom-green" aria-hidden="true"></div>
+    <div class="bloom bloom-violet" aria-hidden="true"></div>
+
+    <!-- vignette -->
+    <div class="vignette" aria-hidden="true"></div>
+
+    <div class="content content-page">
+
+      <!-- header -->
+      <header class="header">
+        <a class="brand" href="index.html">
+          <span class="brand-spark" aria-hidden="true">&#10022;</span>
+          <span class="brand-word">LEVELY</span>
+        </a>
+        <nav class="page-nav">
+          <a class="page-nav-link" href="index.html">Home</a>
+          <span class="badge">THE&nbsp;JOURNAL</span>
+        </nav>
+      </header>
+
+      <main class="journal">
+
+        <!-- title block -->
+        <div class="journal-intro">
+          <div class="eyebrow">Building Levely in public</div>
+          <h1 class="journal-title">The <em>journal</em></h1>
+          <p class="journal-lede">One solo dev, one iOS app, one hackathon deadline. I write down what I build, what breaks, and what I got wrong the first time. No growth tactics, no thought leadership &mdash; just the log.</p>
+        </div>
+
+        <!-- the path of entries -->
+        <div class="thread">
+          <div class="thread-line" aria-hidden="true"></div>
+
+          <!-- ==========================================================
+               PLACEHOLDER ENTRIES — sample copy from the design.
+               Only "Day 1" points at a real published article. Replace
+               this whole block with the Contentful-driven loop before
+               deploying, or delete the three unpublished entries.
+               ========================================================== -->
+
+          <article class="entry entry-latest">
+            <span class="entry-node" aria-hidden="true"></span>
+            <span class="entry-ring" aria-hidden="true"></span>
+            <a class="entry-card" href="#">
+              <div class="entry-meta">
+                <span class="entry-day">Day 7</span>
+                <span class="entry-date">Aug 7, 2026</span>
+                <span class="entry-sep" aria-hidden="true">&#10022;</span>
+                <span class="entry-read">7 min read</span>
+                <span class="entry-flag">Latest</span>
+              </div>
+              <h2 class="entry-title">First TestFlight build, and everything it broke</h2>
+              <p class="entry-excerpt">Live Activities looked perfect in the simulator and immediately fell over on a real lock screen. A list of what went wrong the first time it left my machine, in the order I found it.</p>
+              <span class="entry-more">Read the entry &rarr;</span>
+            </a>
+          </article>
+
+          <article class="entry">
+            <span class="entry-node" aria-hidden="true"></span>
+            <a class="entry-card" href="#">
+              <div class="entry-meta">
+                <span class="entry-day">Day 5</span>
+                <span class="entry-date">Aug 5, 2026</span>
+                <span class="entry-sep" aria-hidden="true">&#10022;</span>
+                <span class="entry-read">5 min read</span>
+              </div>
+              <h2 class="entry-title">Nobody needs another focus app</h2>
+              <p class="entry-excerpt">A fair objection, and one I&rsquo;ve made to myself roughly daily. What I keep landing on is that the timer isn&rsquo;t the product &mdash; the character sheet is. Notes on the difference, and on building something that already exists.</p>
+              <span class="entry-more">Read the entry &rarr;</span>
+            </a>
+          </article>
+
+          <article class="entry">
+            <span class="entry-node" aria-hidden="true"></span>
+            <a class="entry-card" href="#">
+              <div class="entry-meta">
+                <span class="entry-day">Day 3</span>
+                <span class="entry-date">Aug 3, 2026</span>
+                <span class="entry-sep" aria-hidden="true">&#10022;</span>
+                <span class="entry-read">4 min read</span>
+              </div>
+              <h2 class="entry-title">The XP vial took four hours and I regret nothing</h2>
+              <p class="entry-excerpt">It&rsquo;s a rounded rectangle with green liquid in it. It should have taken twenty minutes. I want to talk about why the wobble on the surface mattered more than three features I cut that week.</p>
+              <span class="entry-more">Read the entry &rarr;</span>
+            </a>
+          </article>
+
+          <article class="entry">
+            <span class="entry-node" aria-hidden="true"></span>
+            <a class="entry-card" href="https://medium.com/@radu_constantin/the-quest-journal-1-8316ba44f9e3">
+              <div class="entry-meta">
+                <span class="entry-day">Day 1</span>
+                <span class="entry-date">Aug 1, 2026</span>
+                <span class="entry-sep" aria-hidden="true">&#10022;</span>
+                <span class="entry-read">6 min read</span>
+              </div>
+              <h2 class="entry-title">Why I&rsquo;m building a focus timer that levels you up</h2>
+              <p class="entry-excerpt">Every focus app hands you a cartoon plant. I wanted the reward to be the thing I was actually trying to get better at, so I started building it. Here&rsquo;s the idea, the mechanic behind it, and why I picked a hackathon deadline.</p>
+              <span class="entry-more">Read the entry &rarr;</span>
+            </a>
+          </article>
+
+          <!-- the road ahead -->
+          <div class="thread-start">
+            <span class="thread-start-node" aria-hidden="true"></span>
+            <p>Where the road started. New entries land at the top as I build &mdash; the email below is how you hear about them first.</p>
+          </div>
+        </div>
+
+        <!-- signup -->
+        <section class="signup">
+          <div class="capture signup-grid">
+            <div class="signup-copy">
+              <div class="signup-title">Get the next entry <em>first</em>.</div>
+              <p class="signup-body">Follow the build, get founding access at launch. <span id="scarcity" class="micro-gold">Only 100 founding spots.</span> It&rsquo;s just me &mdash; no spam, no VC deck, no plant.</p>
+            </div>
+            <div class="signup-col">
+              <form id="signup-form" novalidate action="https://formspree.io/f/mgogaqvj" method="POST">
+                <input id="email" name="email" type="email" required placeholder="you@wherever.com" aria-label="Email address" autocomplete="email">
+                <button id="submit-btn" type="submit">Get founding access</button>
+              </form>
+              <p id="error" class="error" hidden></p>
+            </div>
+          </div>
+
+          <!-- success state (hidden until submit) -->
+          <div id="success" class="success" hidden>
+            <span class="success-check" aria-hidden="true">&#10003;</span>
+            <div>
+              <div class="success-title">You&rsquo;re in. Welcome, adventurer.</div>
+              <p class="success-body">+50 XP for good taste. New entries and founding access will land in your inbox.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- footer -->
+        <footer class="page-footer">
+          <a href="index.html">&larr; Back to Levely</a>
+          <span class="sep" aria-hidden="true">&#10022;</span>
+          <a class="page-footer-muted" href="https://x.com/radu_codes">@radu_codes on X</a>
+          <span class="page-footer-note">Written between builds.</span>
+        </footer>
+
+      </main>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
