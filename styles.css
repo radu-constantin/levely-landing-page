@@ -5,6 +5,12 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* The `hidden` attribute is only `display: none` in the UA stylesheet, so any
+   class rule setting `display` beats it on specificity — `.success` and the
+   signup capture block both do. Without this, the "You're in" confirmation
+   renders permanently next to the form it is supposed to replace. */
+[hidden] { display: none !important; }
+
 body {
   margin: 0;
   /* no fixed height: the page is sized by .stage (min one viewport tall).
@@ -458,15 +464,35 @@ a:hover { color: #b6f8d3; }
    .vignette, .brand, .badge, .capture/#signup-form, .success.
    ============================================================ */
 
-/* the landing is one locked screen; these pages scroll, so the blooms are
-   pinned near the top of the document instead of floating at a percentage
-   of a page whose height depends on how many entries exist */
+/* The landing is one locked screen, so its ambient layers can be stretched
+   over the whole .stage. These pages scroll, and .stage grows with every
+   entry published — stretching the layers over it means the painted area
+   grows without bound (13 tiled radial gradients plus a 260px-blur inset
+   shadow, re-rastered strip by strip as you scroll), and the vignette,
+   blooms and gradient only ever appear at the very top and bottom of the
+   document. Pinning them to the viewport fixes both: the painted area
+   stays at one screen regardless of length, and the ambience is present
+   at every scroll position.
+   .stage has no transform/filter/contain, so it does not trap these. */
+.stage-page { background: #090619; }
+.stage-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(135% 108% at 50% 2%, #2a1e52 0%, #1c1440 34%, #120c2d 64%, #090619 100%);
+}
+.stage-page .starfield,
+.stage-page .bloom,
+.stage-page .vignette { position: fixed; }
+
+/* now that they're viewport-relative, the design's percentages are correct */
 .stage-page .bloom-green {
-  left: 16%; top: 380px; width: 600px; height: 600px;
+  left: 16%; top: 14%; width: 600px; height: 600px;
   background: radial-gradient(closest-side, rgba(51,221,133,.16), rgba(51,221,133,.04) 55%, transparent 72%);
 }
 .stage-page .bloom-violet {
-  left: 78%; top: 760px; width: 560px; height: 560px;
+  left: 78%; top: 38%; width: 560px; height: 560px;
   background: radial-gradient(closest-side, rgba(150,116,236,.16), transparent 70%);
 }
 
@@ -488,6 +514,10 @@ a:hover { color: #b6f8d3; }
   text-decoration: none;
 }
 .page-nav-link:hover { color: #e6e0f5; }
+
+/* on the article the section pill is a link back to the index */
+a.badge { text-decoration: none; }
+a.badge:hover { background: rgba(242,207,131,.12); color: #f2cf83; }
 
 /* ---------- journal index ---------- */
 .journal {
@@ -660,6 +690,252 @@ a:hover { color: #b6f8d3; }
   color: #7f7a97;
   font-style: italic;
 }
+
+/* ---------- article ---------- */
+.post {
+  width: 100%;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(40px, 7vh, 72px) 0 0;
+}
+
+.post-back {
+  display: inline-block;
+  font-size: 13px;
+  color: #9d97b8;
+  text-decoration: none;
+  margin-bottom: 26px;
+}
+.post-back:hover { color: #8df2bd; }
+
+.post-meta { margin-bottom: 20px; }
+
+.post-title {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(38px, 5.6vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  margin: 0 0 22px;
+  color: #f6f1ff;
+  text-shadow: 0 0 40px rgba(150,116,236,.32);
+  text-wrap: pretty;
+}
+.post-title em { font-style: italic; color: #ffe9b8; }
+
+.post-lede {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 500;
+  font-size: clamp(19px, 2.4vw, 23px);
+  line-height: 1.5;
+  color: #c7c1dd;
+  margin: 0 0 12px;
+  text-wrap: pretty;
+}
+
+.post-byline {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 20px 0 26px;
+  margin-bottom: 38px;
+  border-bottom: 1px solid rgba(214,205,246,.1);
+}
+.post-avatar {
+  flex: none;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(150deg, rgba(150,116,236,.4), rgba(30,25,60,.8));
+  border: 1px solid rgba(242,207,131,.3);
+  color: #f2cf83;
+  font-family: "Cinzel", serif;
+  font-size: 13px;
+  font-weight: 600;
+}
+.post-author { font-size: 13px; line-height: 1.45; color: #c7c1dd; }
+.post-author-role { font-size: 12px; line-height: 1.45; color: #8a84a2; }
+
+/* ---------- article body ----------
+   These are the elements Contentful's rich-text renderer emits. Styling by
+   element rather than by class means new node types pick up the design for
+   free, and the renderer needs no per-node customisation. */
+.post-body {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.post-body p {
+  margin: 0;
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: #c0bad6;
+  max-width: 72ch;
+  text-wrap: pretty;
+}
+.post-body h2 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(27px, 3.4vw, 34px);
+  line-height: 1.15;
+  letter-spacing: -0.005em;
+  margin: 20px 0 -6px;
+  color: #f6f1ff;
+}
+.post-body h3 {
+  font-family: "Cormorant Garamond", serif;
+  font-weight: 600;
+  font-size: clamp(21px, 2.4vw, 25px);
+  line-height: 1.2;
+  margin: 12px 0 -8px;
+  color: #f6f1ff;
+}
+.post-body > *:first-child { margin-top: 0; }
+
+.post-body em { font-style: italic; color: #a8e9c6; }
+.post-body strong { font-weight: 600; color: #e6e0f5; }
+.post-body a { color: #8df2bd; text-underline-offset: 3px; }
+
+.post-body ul,
+.post-body ol {
+  margin: 0;
+  padding-left: 22px;
+  max-width: 72ch;
+  font-size: 16.5px;
+  line-height: 1.75;
+  color: #c0bad6;
+}
+.post-body li { margin-bottom: 8px; }
+.post-body li::marker { color: #f2cf83; }
+
+.post-body blockquote {
+  margin: 0;
+  padding-left: 20px;
+  border-left: 2px solid rgba(242,207,131,.35);
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: clamp(18px, 2.2vw, 21px);
+  line-height: 1.5;
+  color: #d7d1ea;
+  max-width: 66ch;
+}
+.post-body blockquote p { font: inherit; color: inherit; max-width: none; }
+
+.post-body code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  padding: 1px 6px;
+  border-radius: 5px;
+  border: 1px solid rgba(214,205,246,.14);
+  background: rgba(255,255,255,.06);
+  color: #dcd6f0;
+}
+.post-body pre {
+  margin: 0;
+  overflow-x: auto;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(214,205,246,.12);
+  background: rgba(255,255,255,.03);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+.post-body pre code {
+  padding: 0;
+  border: none;
+  background: none;
+  font-size: inherit;
+}
+
+.post-body hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(214,205,246,.22), transparent);
+}
+
+.post-body figure {
+  margin: 14px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+.post-figure-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(214,205,246,.14);
+  background: rgba(255,255,255,.03);
+  display: grid;
+  place-items: center;
+}
+.post-figure-hint {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #6f6a8a;
+}
+.post-body figure img,
+.post-figure-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.post-body figcaption {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: #8a84a2;
+}
+
+/* ---------- end of article ---------- */
+.post-end {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 44px 0 0;
+}
+.post-end-rule {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(214,205,246,.22), transparent);
+}
+.post-end-spark {
+  color: #f2cf83;
+  font-size: 12px;
+  text-shadow: 0 0 10px rgba(242,207,131,.6);
+}
+
+.post-share {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 26px;
+}
+.post-share-label { font-size: 13px; color: #8a84a2; }
+.post-share-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 99px;
+  border: 1px solid rgba(214,205,246,.2);
+  background: rgba(255,255,255,.04);
+  color: #c7c1dd;
+  font-size: 13px;
+  text-decoration: none;
+  transition: background .2s ease, border-color .2s ease, color .2s ease;
+}
+.post-share-btn:hover {
+  background: rgba(255,255,255,.08);
+  border-color: rgba(242,207,131,.35);
+  color: #f6f1ff;
+}
+.post-share-btn svg { flex: none; }
 
 /* ---------- signup block (journal + article) ---------- */
 .signup {

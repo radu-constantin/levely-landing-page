@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Why I&rsquo;m building a focus timer that levels you up — Levely</title>
+  <meta name="description" content="Every focus app hands you a cartoon plant. I wanted the reward to be the thing I was actually trying to get better at, so I started building it.">
+
+  <!-- Open Graph / social — per-article, this is the whole reason for the build step -->
+  <meta property="og:title" content="Why I'm building a focus timer that levels you up">
+  <meta property="og:description" content="Every focus app hands you a cartoon plant. I wanted the reward to be the thing I was actually trying to get better at, so I started building it.">
+  <meta property="og:type" content="article">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="stage stage-page">
+
+    <!-- starfield layers -->
+    <div class="starfield starfield-1" aria-hidden="true"></div>
+    <div class="starfield starfield-2" aria-hidden="true"></div>
+
+    <!-- ambient blooms -->
+    <div class="bloom bloom-green" aria-hidden="true"></div>
+    <div class="bloom bloom-violet" aria-hidden="true"></div>
+
+    <!-- vignette -->
+    <div class="vignette" aria-hidden="true"></div>
+
+    <div class="content content-page">
+
+      <!-- header -->
+      <header class="header">
+        <a class="brand" href="index.html">
+          <span class="brand-spark" aria-hidden="true">&#10022;</span>
+          <span class="brand-word">LEVELY</span>
+        </a>
+        <nav class="page-nav">
+          <a class="page-nav-link" href="index.html">Home</a>
+          <a class="badge" href="journal.html">THE&nbsp;JOURNAL</a>
+        </nav>
+      </header>
+
+      <article class="post">
+
+        <a class="post-back" href="journal.html">&larr; All entries</a>
+
+        <!-- meta: same classes as the journal card, so the two never drift -->
+        <div class="entry-meta post-meta">
+          <span class="entry-day">Day 1</span>
+          <span class="entry-date">Aug 1, 2026</span>
+          <span class="entry-sep" aria-hidden="true">&#10022;</span>
+          <span class="entry-read">6 min read</span>
+        </div>
+
+        <h1 class="post-title">Why I&rsquo;m building a focus timer that <em>levels you up</em></h1>
+
+        <p class="post-lede">Every focus app I&rsquo;ve used hands you a cartoon plant. I wanted the reward to be the thing I was actually trying to get better at, so I started building it.</p>
+
+        <div class="post-byline">
+          <span class="post-avatar" aria-hidden="true">R</span>
+          <div>
+            <div class="post-author">Radu</div>
+            <div class="post-author-role">Building Levely in public</div>
+          </div>
+        </div>
+
+        <!-- ==========================================================
+             PLACEHOLDER BODY — sample copy from the design.
+             Everything inside .post-body is what Contentful's rich-text
+             renderer will emit: plain elements, no classes. Styles are
+             scoped to `.post-body <element>` so the renderer needs no
+             per-node customisation.
+             ========================================================== -->
+        <div class="post-body">
+
+          <p>I have started roughly forty things this year. I have finished four of them. The gap between those two numbers is the entire reason this app exists, and if you&rsquo;re reading this you probably have your own version of those numbers.</p>
+
+          <p>For a while I blamed my timer. That was unfair to the timer. Pomodoro apps do exactly what they say: they count down from twenty-five and then they make a noise. The problem is what happens after the noise. You get a checkmark, or a streak, or a tiny tree in a little forest, and none of it has anything to do with the thing you just spent twenty-five minutes on.</p>
+
+          <h2>The plant can&rsquo;t play guitar</h2>
+
+          <p>This is the sentence I kept coming back to, and it&rsquo;s stayed as the pitch because I haven&rsquo;t found a shorter way to say it. The plant is a proxy. It grows when you focus, so watching it grow feels a bit like progress, and your brain accepts the trade for a while. Then one day you notice you&rsquo;ve grown a very healthy digital shrub and you still can&rsquo;t play the song.</p>
+
+          <p>What I wanted was a timer where the reward and the work were the same object. You sit down for forty minutes of guitar, and what levels up is <em>guitar</em>. Not a shrub. Not a streak counter. The skill itself, named the way you named it, moving because you moved it.</p>
+
+          <figure>
+            <div class="post-figure-frame">
+              <span class="post-figure-hint">Character sheet screenshot</span>
+            </div>
+            <figcaption>The character sheet as it stands today. Every skill you add gets its own vial, its own level, and its own slow climb.</figcaption>
+          </figure>
+
+          <h2>Skill by use</h2>
+
+          <p>The mechanic is old and it isn&rsquo;t mine. Some role-playing games level a skill by making you use that skill &mdash; you don&rsquo;t spend points on swimming, you get better at swimming by swimming. I&rsquo;ve always liked how honest that is. There&rsquo;s no build to plan and no way to game it. You get good at what you actually do.</p>
+
+          <p>Applied to a focus timer it turns out to be almost embarrassingly simple. You define the skills you care about. You start a session and tell it which skill you&rsquo;re working. When the session ends, that skill takes the XP. Nothing else in the app earns anything. If you want a level, you have to go and do the thing.</p>
+
+          <blockquote>No XP for opening the app. No bonus for a perfect week. No penalty for a broken streak &mdash; a broken streak is already punishment enough, and I refuse to build software that scolds people.</blockquote>
+
+          <p>I&rsquo;ve cut a lot of ideas that fought with this. The rules I keep coming back to:</p>
+
+          <ul>
+            <li>XP comes from finished sessions, nothing else.</li>
+            <li>Every session belongs to exactly one skill.</li>
+            <li>The app never invents a skill for you.</li>
+          </ul>
+
+          <figure>
+            <div class="post-figure-frame">
+              <span class="post-figure-hint">Running-timer screenshot</span>
+            </div>
+            <figcaption>A session in progress. The vial fills as the timer runs, which is the only piece of feedback I&rsquo;ve allowed myself so far.</figcaption>
+          </figure>
+
+          <h2>Why I&rsquo;m writing this down</h2>
+
+          <p>This is my first iOS app, I&rsquo;m building it alone, and I&rsquo;ve given myself a hackathon deadline that I am probably going to regret. Writing the log is partly accountability and partly self-defence: if I publish what I decided on Tuesday, I&rsquo;m less likely to quietly rewrite history on Friday when it doesn&rsquo;t work.</p>
+
+          <p>So the entries will be honest about the parts that go badly, which I expect to be most of them. If that sounds like something you&rsquo;d want to read, the sign-up below is the whole distribution strategy. There isn&rsquo;t a second one.</p>
+        </div>
+
+        <!-- end of article -->
+        <div class="post-end" aria-hidden="true">
+          <span class="post-end-rule"></span>
+          <span class="post-end-spark">&#10022;</span>
+          <span class="post-end-rule"></span>
+        </div>
+
+        <!-- share -->
+        <div class="post-share">
+          <span class="post-share-label">Found it useful?</span>
+          <a class="post-share-btn" href="https://x.com/intent/tweet?text=Why%20I%27m%20building%20a%20focus%20timer%20that%20levels%20you%20up" target="_blank" rel="noopener">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+            Share on X
+          </a>
+        </div>
+
+        <!-- signup -->
+        <section class="signup">
+          <div class="capture signup-grid">
+            <div class="signup-copy">
+              <div class="signup-title">Get the next entry <em>first</em>.</div>
+              <p class="signup-body">Stay up to date with the project, get founding access at launch.</p>
+            </div>
+            <div class="signup-col">
+              <form id="signup-form" novalidate action="https://formspree.io/f/mgogaqvj" method="POST">
+                <input id="email" name="email" type="email" required placeholder="you@wherever.com" aria-label="Email address" autocomplete="email">
+                <button id="submit-btn" type="submit">Get founding access</button>
+              </form>
+              <p id="error" class="error" hidden></p>
+            </div>
+          </div>
+
+          <div id="success" class="success" hidden>
+            <span class="success-check" aria-hidden="true">&#10003;</span>
+            <div>
+              <div class="success-title">You&rsquo;re in. Welcome, adventurer.</div>
+              <p class="success-body">+50 XP for good taste. New entries and founding access will land in your inbox.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- footer -->
+        <footer class="page-footer">
+          <a href="journal.html">&larr; All entries</a>
+          <span class="sep" aria-hidden="true">&#10022;</span>
+          <a class="page-footer-muted" href="https://x.com/radu_codes">@radu_codes on X</a>
+          <span class="page-footer-note">Written between builds.</span>
+        </footer>
+
+      </article>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
