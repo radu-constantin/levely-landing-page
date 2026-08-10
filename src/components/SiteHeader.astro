@@ -1,0 +1,34 @@
+---
+/**
+ * One header for every page. The `.badge` pill marks the section you are
+ * currently in; the plain link is where you can go from here. On an article
+ * you are inside the journal, so the pill becomes a link back to the index.
+ */
+interface Props {
+  current: 'home' | 'journal' | 'article';
+}
+
+const { current } = Astro.props;
+---
+<header class="header">
+  <a class="brand" href="/">
+    <span class="brand-spark" aria-hidden="true">&#10022;</span>
+    <span class="brand-word">LEVELY</span>
+  </a>
+
+  <nav class="page-nav">
+    {current === 'home' ? (
+      <>
+        <span class="badge">HOME</span>
+        <a class="page-nav-link" href="/journal/">The Journal</a>
+      </>
+    ) : (
+      <>
+        <a class="page-nav-link" href="/">Home</a>
+        {current === 'article'
+          ? <a class="badge" href="/journal/">THE&nbsp;JOURNAL</a>
+          : <span class="badge">THE&nbsp;JOURNAL</span>}
+      </>
+    )}
+  </nav>
+</header>

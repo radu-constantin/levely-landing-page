@@ -1,0 +1,56 @@
+---
+import '../styles/global.css';
+import SiteBackground from '../components/SiteBackground.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  ogTitle?: string;
+  ogType?: 'website' | 'article';
+  /** Long-form pages scroll: pins the ambient layers to the viewport. */
+  longform?: boolean;
+  current: 'home' | 'journal' | 'article';
+}
+
+const {
+  title,
+  description,
+  ogTitle = title,
+  ogType = 'website',
+  longform = false,
+  current,
+} = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+
+  <meta property="og:title" content={ogTitle} />
+  <meta property="og:description" content={description} />
+  <meta property="og:type" content={ogType} />
+  {ogType === 'article' && <meta name="twitter:card" content="summary_large_image" />}
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class:list={['stage', longform && 'stage-page']}>
+    <SiteBackground />
+
+    <div class:list={['content', longform && 'content-page']}>
+      <SiteHeader current={current} />
+      <slot />
+    </div>
+  </div>
+
+  <script is:inline src="/app.js"></script>
+</body>
+</html>

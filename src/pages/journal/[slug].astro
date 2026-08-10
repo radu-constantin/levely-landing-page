@@ -1,0 +1,72 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import SignupForm from '../../components/SignupForm.astro';
+import PageFooter from '../../components/PageFooter.astro';
+import { getJournalEntries, type JournalEntry } from '../../lib/contentful';
+import { renderBody } from '../../lib/renderBody';
+
+export async function getStaticPaths() {
+  const entries = await getJournalEntries();
+  return entries.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props as { entry: JournalEntry };
+
+const bodyHtml = renderBody(entry.body);
+const shareHref = `https://x.com/intent/tweet?text=${encodeURIComponent(entry.title)}`;
+---
+<BaseLayout
+  title={`${entry.title} — Levely`}
+  description={entry.lede}
+  ogTitle={entry.title}
+  ogType="article"
+  longform
+  current="article"
+>
+  <article class="post">
+
+    <a class="post-back" href="/journal/">&larr; All entries</a>
+
+    <div class="entry-meta post-meta">
+      {entry.entryNumber != null && <span class="entry-number">Entry {entry.entryNumber}</span>}
+      <span class="entry-date">{entry.date}</span>
+      <span class="entry-sep" aria-hidden="true">&#10022;</span>
+      <span class="entry-read">{entry.readTime}</span>
+    </div>
+
+    <h1 class="post-title">{entry.title}</h1>
+
+    <p class="post-lede">{entry.lede}</p>
+
+    <div class="post-byline">
+      <span class="post-avatar" aria-hidden="true">R</span>
+      <div>
+        <div class="post-author">Radu</div>
+        <div class="post-author-role">Building Levely in public</div>
+      </div>
+    </div>
+
+    <div class="post-body" set:html={bodyHtml}></div>
+
+    <div class="post-end" aria-hidden="true">
+      <span class="post-end-rule"></span>
+      <span class="post-end-spark">&#10022;</span>
+      <span class="post-end-rule"></span>
+    </div>
+
+    <div class="post-share">
+      <span class="post-share-label">Found it useful?</span>
+      <a class="post-share-btn" href={shareHref} target="_blank" rel="noopener">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path></svg>
+        Share on X
+      </a>
+    </div>
+
+    <SignupForm variant="panel" />
+
+    <PageFooter backHref="/journal/" backLabel="All entries" />
+  </article>
+</BaseLayout>

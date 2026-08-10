@@ -551,6 +551,16 @@ a.badge:hover { background: rgba(242,207,131,.12); color: #f2cf83; }
   text-wrap: pretty;
 }
 
+/* shown instead of the thread when nothing is published yet */
+.journal-empty {
+  margin: 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: #8a84a2;
+  max-width: 52ch;
+  font-style: italic;
+}
+
 /* ---------- the thread of entries ---------- */
 .thread {
   --thread-inset: 44px;
@@ -622,7 +632,7 @@ a.badge:hover { background: rgba(242,207,131,.12); color: #f2cf83; }
   gap: 10px 14px;
   margin-bottom: 11px;
 }
-.entry-day {
+.entry-number {
   font-family: "Cinzel", serif;
   font-weight: 600;
   font-size: 10.5px;

@@ -1,2 +1,9 @@
 .claude
 Levely.dc.html
+node_modules
+dist
+.astro
+.DS_Store
+.env
+.env.*
+!.env.example

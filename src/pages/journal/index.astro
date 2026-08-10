@@ -1,0 +1,53 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import EntryCard from '../../components/EntryCard.astro';
+import SignupForm from '../../components/SignupForm.astro';
+import PageFooter from '../../components/PageFooter.astro';
+import { getJournalEntries } from '../../lib/contentful';
+
+const title = 'The Journal — Levely';
+const description =
+  'Building Levely in public. One solo dev, one iOS app, one hackathon deadline — what I build, what breaks, and what I got wrong the first time.';
+
+// Newest first. `latest` is derived from position, never stored.
+const entries = await getJournalEntries();
+---
+<BaseLayout title={title} description={description} longform current="journal">
+  <main class="journal">
+
+    <div class="journal-intro">
+      <div class="eyebrow">Building Levely in public</div>
+      <h1 class="journal-title">The <em>journal</em></h1>
+      <p class="journal-lede">One solo dev, one iOS app, one hackathon deadline. I write down what I build, what breaks, and what I got wrong the first time. No growth tactics, no thought leadership &mdash; just the log.</p>
+    </div>
+
+    {entries.length > 0 ? (
+      <div class="thread">
+        <div class="thread-line" aria-hidden="true"></div>
+
+        {entries.map((entry, i) => (
+          <EntryCard
+            entryNumber={entry.entryNumber}
+            date={entry.date}
+            readTime={entry.readTime}
+            title={entry.title}
+            excerpt={entry.excerpt}
+            href={entry.href}
+            latest={i === 0}
+          />
+        ))}
+
+        <div class="thread-start">
+          <span class="thread-start-node" aria-hidden="true"></span>
+          <p>Where the road started. New entries land at the top as I build &mdash; the email below is how you hear about them first.</p>
+        </div>
+      </div>
+    ) : (
+      <p class="journal-empty">The first entry is being written. Leave your email below and it will land in your inbox.</p>
+    )}
+
+    <SignupForm variant="panel" />
+
+    <PageFooter backHref="/" backLabel="Back to Levely" />
+  </main>
+</BaseLayout>

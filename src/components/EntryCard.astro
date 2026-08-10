@@ -1,0 +1,37 @@
+---
+/**
+ * One node on the journal thread. `latest` is derived by the caller from
+ * sort order, never stored — it is always just the first entry by date.
+ */
+interface Props {
+  /** Stored on the entry, never derived — a number is an identity, and
+   *  deriving it from sort order would renumber posts on unpublish. */
+  entryNumber?: number;
+  date: string;
+  readTime: string;
+  title: string;
+  excerpt: string;
+  href: string;
+  latest?: boolean;
+}
+
+const { entryNumber, date, readTime, title, excerpt, href, latest = false } = Astro.props;
+---
+<article class:list={['entry', latest && 'entry-latest']}>
+  <span class="entry-node" aria-hidden="true"></span>
+  {latest && <span class="entry-ring" aria-hidden="true"></span>}
+
+  <a class="entry-card" href={href}>
+    <div class="entry-meta">
+      {entryNumber != null && <span class="entry-number">Entry {entryNumber}</span>}
+      <span class="entry-date">{date}</span>
+      <span class="entry-sep" aria-hidden="true">&#10022;</span>
+      <span class="entry-read">{readTime}</span>
+      {latest && <span class="entry-flag">Latest</span>}
+    </div>
+
+    <h2 class="entry-title">{title}</h2>
+    <p class="entry-excerpt">{excerpt}</p>
+    <span class="entry-more">Read the entry &rarr;</span>
+  </a>
+</article>

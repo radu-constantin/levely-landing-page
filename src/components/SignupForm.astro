@@ -1,0 +1,65 @@
+---
+/**
+ * The email capture. Two shapes, one set of ids — `app.js` drives both
+ * without knowing which it is looking at: it hides `.capture` and unhides
+ * `#success`. Only one of these may appear per page.
+ *
+ *  - `inline` : bare form + microcopy, used in the landing hero
+ *  - `panel`  : framed two-column block, used under the journal and articles
+ */
+interface Props {
+  variant?: 'inline' | 'panel';
+  successBody?: string;
+}
+
+const {
+  variant = 'inline',
+  successBody = '+50 XP for good taste. New entries and founding access will land in your inbox.',
+} = Astro.props;
+
+const microcopy = 'Stay up to date with the project, get founding access at launch.';
+---
+{variant === 'inline' ? (
+  <div class="capture">
+    <form id="signup-form" novalidate action="https://formspree.io/f/mgogaqvj" method="POST">
+      <input id="email" name="email" type="email" required placeholder="you@wherever.com" aria-label="Email address" autocomplete="email" />
+      <button id="submit-btn" type="submit">Get founding access</button>
+    </form>
+    <p id="error" class="error" hidden></p>
+    <p class="microcopy">
+      <span class="micro-lead">{microcopy}</span>
+    </p>
+  </div>
+
+  <div id="success" class="success" hidden>
+    <span class="success-check" aria-hidden="true">&#10003;</span>
+    <div>
+      <div class="success-title">You&rsquo;re in. Welcome, adventurer.</div>
+      <p class="success-body">{successBody}</p>
+    </div>
+  </div>
+) : (
+  <section class="signup">
+    <div class="capture signup-grid">
+      <div class="signup-copy">
+        <div class="signup-title">Get the next entry <em>first</em>.</div>
+        <p class="signup-body">{microcopy}</p>
+      </div>
+      <div class="signup-col">
+        <form id="signup-form" novalidate action="https://formspree.io/f/mgogaqvj" method="POST">
+          <input id="email" name="email" type="email" required placeholder="you@wherever.com" aria-label="Email address" autocomplete="email" />
+          <button id="submit-btn" type="submit">Get founding access</button>
+        </form>
+        <p id="error" class="error" hidden></p>
+      </div>
+    </div>
+
+    <div id="success" class="success" hidden>
+      <span class="success-check" aria-hidden="true">&#10003;</span>
+      <div>
+        <div class="success-title">You&rsquo;re in. Welcome, adventurer.</div>
+        <p class="success-body">{successBody}</p>
+      </div>
+    </div>
+  </section>
+)}
