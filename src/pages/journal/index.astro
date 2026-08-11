@@ -18,7 +18,7 @@ const entries = await getJournalEntries();
     <div class="journal-intro">
       <div class="eyebrow">Building Levely in public</div>
       <h1 class="journal-title">The <em>journal</em></h1>
-      <p class="journal-lede">One solo dev, one iOS app, one hackathon deadline. I write down what I build, what breaks, and what I got wrong the first time. No growth tactics, no thought leadership &mdash; just the log.</p>
+      <p class="journal-lede">One solo dev, one iOS app, one hackathon deadline. I write down what I build, what breaks, and what I got wrong the first time.</p>
     </div>
 
     {entries.length > 0 ? (
@@ -36,11 +36,6 @@ const entries = await getJournalEntries();
             latest={i === 0}
           />
         ))}
-
-        <div class="thread-start">
-          <span class="thread-start-node" aria-hidden="true"></span>
-          <p>Where the road started. New entries land at the top as I build &mdash; the email below is how you hear about them first.</p>
-        </div>
       </div>
     ) : (
       <p class="journal-empty">The first entry is being written. Leave your email below and it will land in your inbox.</p>

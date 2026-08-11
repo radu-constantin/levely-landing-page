@@ -16,7 +16,12 @@ export async function getStaticPaths() {
 const { entry } = Astro.props as { entry: JournalEntry };
 
 const bodyHtml = renderBody(entry.body);
-const shareHref = `https://x.com/intent/tweet?text=${encodeURIComponent(entry.title)}`;
+// Without the article's own URL the tweet is just a sentence with no way back
+// here, which defeats the point of the button.
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const shareHref =
+  `https://x.com/intent/tweet?text=${encodeURIComponent(entry.title)}` +
+  (canonical ? `&url=${encodeURIComponent(canonical)}` : '');
 ---
 <BaseLayout
   title={`${entry.title} — Levely`}
@@ -43,10 +48,7 @@ const shareHref = `https://x.com/intent/tweet?text=${encodeURIComponent(entry.ti
 
     <div class="post-byline">
       <span class="post-avatar" aria-hidden="true">R</span>
-      <div>
-        <div class="post-author">Radu</div>
-        <div class="post-author-role">Building Levely in public</div>
-      </div>
+      <div class="post-author">Radu</div>
     </div>
 
     <div class="post-body" set:html={bodyHtml}></div>

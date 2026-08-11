@@ -21,6 +21,9 @@ const {
   longform = false,
   current,
 } = Astro.props;
+
+// Undefined until SITE_URL is set — see astro.config.mjs.
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
 ---
 <!DOCTYPE html>
 <html lang="en">
@@ -33,6 +36,8 @@ const {
   <meta property="og:title" content={ogTitle} />
   <meta property="og:description" content={description} />
   <meta property="og:type" content={ogType} />
+  {canonical && <meta property="og:url" content={canonical} />}
+  {canonical && <link rel="canonical" href={canonical} />}
   {ogType === 'article' && <meta name="twitter:card" content="summary_large_image" />}
 
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />

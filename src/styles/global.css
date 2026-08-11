@@ -509,11 +509,11 @@ a:hover { color: #b6f8d3; }
   gap: 22px;
 }
 .page-nav-link {
-  font-size: 13px;
-  color: #9d97b8;
+  font-size: 14px;
+  color: #c7c1dd;
   text-decoration: none;
 }
-.page-nav-link:hover { color: #e6e0f5; }
+.page-nav-link:hover { color: #f6f1ff; }
 
 /* on the article the section pill is a link back to the index */
 a.badge { text-decoration: none; }
@@ -681,26 +681,6 @@ a.badge:hover { background: rgba(242,207,131,.12); color: #f2cf83; }
   color: #8df2bd;
 }
 
-.thread-start {
-  position: relative;
-  padding-bottom: 14px;
-}
-.thread-start-node {
-  position: absolute;
-  left: calc(3.5px - var(--thread-inset));
-  top: 6px;
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  border: 1px dashed rgba(214,205,246,.4);
-}
-.thread-start p {
-  margin: 0;
-  font-size: 13px;
-  line-height: 1.6;
-  color: #7f7a97;
-  font-style: italic;
-}
-
 /* ---------- article ---------- */
 .post {
   width: 100%;
@@ -765,7 +745,6 @@ a.badge:hover { background: rgba(242,207,131,.12); color: #f2cf83; }
   font-weight: 600;
 }
 .post-author { font-size: 13px; line-height: 1.45; color: #c7c1dd; }
-.post-author-role { font-size: 12px; line-height: 1.45; color: #8a84a2; }
 
 /* ---------- article body ----------
    These are the elements Contentful's rich-text renderer emits. Styling by
