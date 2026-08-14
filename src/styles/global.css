@@ -851,10 +851,14 @@ a.badge:hover { background: rgba(242,207,131,.12); color: #f2cf83; }
   flex-direction: column;
   gap: 11px;
 }
+/* The ratio comes from the asset itself (set inline by renderBody.ts) so
+   images are framed at their own proportions rather than cropped to 16/10.
+   The fallback covers assets Contentful reports no dimensions for. */
 .post-figure-frame {
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  margin-inline: auto;
+  aspect-ratio: var(--figure-ratio, 16 / 10);
   border-radius: 16px;
   overflow: hidden;
   border: 1px solid rgba(214,205,246,.14);

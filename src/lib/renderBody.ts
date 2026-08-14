@@ -17,6 +17,11 @@ const esc = (s: string) =>
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 
+/** Tallest a single figure may get before it is narrowed instead. */
+const MAX_FIGURE_HEIGHT = 620;
+/** `.post` column width — a cap wider than this could never bind. */
+const FIGURE_CAP_THRESHOLD = 720;
+
 export function renderBody(body: Document | undefined): string {
   if (!body) return '';
 
@@ -39,9 +44,29 @@ export function renderBody(body: Document | undefined): string {
         const caption: string = file.description ?? '';
         const alt: string = file.title ?? caption;
 
+        // The frame takes the asset's own proportions, so nothing is cropped
+        // and the space is reserved before the image loads. Assets without
+        // dimensions (SVGs, say) fall back to the stylesheet's 16/10.
+        const dims = file?.file?.details?.image;
+        const w = Number(dims?.width) || 0;
+        const h = Number(dims?.height) || 0;
+
+        const style: string[] = [];
+        if (w > 0 && h > 0) {
+          style.push(`--figure-ratio: ${w} / ${h}`);
+          // A portrait screenshot at full column width would run to a couple of
+          // thousand pixels tall, so cap how much height one figure can take.
+          // Only emit the cap when it would actually bind inside the column.
+          const widthAtMaxHeight = Math.round(MAX_FIGURE_HEIGHT * (w / h));
+          if (widthAtMaxHeight < FIGURE_CAP_THRESHOLD) {
+            style.push(`max-width: ${widthAtMaxHeight}px`);
+          }
+        }
+        const styleAttr = style.length ? ` style="${style.join('; ')}"` : '';
+
         return [
           '<figure>',
-          '<div class="post-figure-frame">',
+          `<div class="post-figure-frame"${styleAttr}>`,
           `<img src="${esc(src)}?w=1440&fm=webp&q=80" alt="${esc(alt)}" loading="lazy" decoding="async" />`,
           '</div>',
           caption ? `<figcaption>${esc(caption)}</figcaption>` : '',
