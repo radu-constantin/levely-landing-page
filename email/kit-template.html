@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="x-apple-disable-message-reformatting">
+<meta name="color-scheme" content="dark">
+<meta name="supported-color-schemes" content="dark">
+<title>Levely</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600&family=Cormorant+Garamond:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* Clients that support embedded CSS get the finer detail. Everything
+     structural is also set inline, so the layout survives without this. */
+  body, table, td { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+  table { border-collapse: collapse !important; }
+  img { border: 0; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; }
+
+  /* Kit drops the email body into {{ message_content }}. These rules style
+     whatever you type in Kit's editor so it inherits the site's typography. */
+  .body-copy p {
+    margin: 0 0 18px 0;
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-size: 19px;
+    line-height: 1.65;
+    color: #c7c1dd;
+  }
+  .body-copy h1, .body-copy h2, .body-copy h3 {
+    margin: 32px 0 12px 0;
+    font-family: "Cinzel", Georgia, "Times New Roman", serif;
+    font-weight: 600;
+    line-height: 1.3;
+    color: #f6f1ff;
+  }
+  .body-copy h1 { font-size: 26px; }
+  .body-copy h2 { font-size: 22px; }
+  .body-copy h3 { font-size: 19px; letter-spacing: .02em; }
+  .body-copy a { color: #5ff0a3; text-decoration: underline; }
+  .body-copy strong { color: #f6f1ff; font-weight: 700; }
+  .body-copy em { color: #f2cf83; font-style: italic; }
+  .body-copy ul, .body-copy ol { margin: 0 0 18px 0; padding-left: 22px; }
+  .body-copy li {
+    margin: 0 0 8px 0;
+    font-family: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+    font-size: 19px;
+    line-height: 1.6;
+    color: #c7c1dd;
+  }
+  .body-copy blockquote {
+    margin: 22px 0;
+    padding: 2px 0 2px 18px;
+    border-left: 2px solid #f2cf83;
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-size: 19px;
+    font-style: italic;
+    color: #b8b2cf;
+  }
+  .body-copy img { max-width: 100% !important; height: auto !important; border-radius: 6px; }
+  .body-copy hr { border: 0; border-top: 1px solid #2a1e52; margin: 28px 0; }
+
+  a { color: #5ff0a3; }
+
+  /* Outlook.com / Gmail dark-mode inversion guards */
+  [data-ogsc] .t-bright { color: #f6f1ff !important; }
+  [data-ogsc] .t-muted  { color: #8a84a2 !important; }
+  [data-ogsc] .t-body   { color: #c7c1dd !important; }
+
+  @media only screen and (max-width: 620px) {
+    .shell { width: 100% !important; }
+    .pad-x { padding-left: 24px !important; padding-right: 24px !important; }
+    .body-copy p, .body-copy li { font-size: 18px !important; }
+  }
+</style>
+</head>
+
+<body style="margin:0; padding:0; background-color:#090619;">
+
+  <!-- Inbox preview line. Kit fills this from your first line of copy. -->
+  <div style="display:none; max-height:0; overflow:hidden; opacity:0; mso-hide:all;">
+    {{ message_content | strip_html | truncate: 140 }}
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#090619" style="background-color:#090619;">
+    <tr>
+      <td align="center" style="padding:32px 12px 48px 12px;">
+
+        <table role="presentation" class="shell" width="600" cellpadding="0" cellspacing="0" border="0" style="width:600px; max-width:600px; background-color:#120c2d; border:1px solid #2a1e52;">
+
+          <!-- masthead -->
+          <tr>
+            <td class="pad-x" align="center" style="padding:44px 48px 0 48px;">
+
+              <!-- `align=center` makes this table shrink to its widest cell, so the
+                   gold rule below inherits the wordmark's exact width. -->
+              <table role="presentation" align="center" cellpadding="0" cellspacing="0" border="0" style="margin:0 auto;">
+                <tr>
+                  <td class="t-bright" align="center" style="font-family:'Cinzel', Georgia, 'Times New Roman', serif; font-size:23px; font-weight:600; letter-spacing:.22em; color:#f6f1ff; text-transform:uppercase; white-space:nowrap;">
+                    Levely
+                  </td>
+                </tr>
+                <tr>
+                  <td height="2" bgcolor="#f2cf83" style="height:2px; line-height:2px; font-size:0;">&nbsp;</td>
+                </tr>
+              </table>
+
+              <div class="t-muted" style="margin-top:16px; font-family:'Cormorant Garamond', Georgia, serif; font-size:14px; font-style:italic; letter-spacing:.04em; color:#8a84a2;">
+                Notes from the build
+              </div>
+            </td>
+          </tr>
+
+          <!-- the email itself -->
+          <tr>
+            <td class="pad-x body-copy t-body" style="padding:34px 48px 8px 48px; font-family:'Cormorant Garamond', Georgia, 'Times New Roman', serif; font-size:19px; line-height:1.65; color:#c7c1dd;">
+              {{ message_content }}
+            </td>
+          </tr>
+
+          <!-- sign-off rule -->
+          <tr>
+            <td class="pad-x" style="padding:18px 48px 0 48px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td height="1" bgcolor="#2a1e52" style="height:1px; line-height:1px; font-size:0;">&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- footer -->
+          <tr>
+            <td class="pad-x" align="center" style="padding:24px 48px 36px 48px;">
+              <div class="t-muted" style="font-family:'Cormorant Garamond', Georgia, serif; font-size:15px; font-style:italic; color:#9d97b8;">
+                Built in the open by Radu.
+              </div>
+              <div style="margin-top:14px; font-family:-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:12px; line-height:1.7; color:#8a84a2;">
+                <a href="{{ unsubscribe_url }}" style="color:#8a84a2; text-decoration:underline;">Unsubscribe</a>
+                &nbsp;&#10022;&nbsp;
+                <a href="{{ subscriber_preferences_url }}" style="color:#8a84a2; text-decoration:underline;">Update your details</a>
+              </div>
+              <div class="t-muted" style="margin-top:12px; font-family:-apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; font-size:11px; line-height:1.6; color:#6f6a86;">
+                {{ address }}
+              </div>
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

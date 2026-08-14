@@ -14,15 +14,15 @@ interface Props {
 
 const {
   variant = 'inline',
-  successBody = '+50 XP for good taste. New entries and founding access will land in your inbox.',
+  successBody = 'Confirm your email and get founding access.',
 } = Astro.props;
 
 const microcopy = 'Stay up to date with the project, get founding access at launch.';
 ---
 {variant === 'inline' ? (
   <div class="capture">
-    <form id="signup-form" novalidate action="https://formspree.io/f/mgogaqvj" method="POST">
-      <input id="email" name="email" type="email" required placeholder="you@wherever.com" aria-label="Email address" autocomplete="email" />
+    <form id="signup-form" novalidate action="https://app.kit.com/forms/9801686/subscriptions" method="POST">
+      <input id="email" name="email_address" type="email" required placeholder="you@wherever.com" aria-label="Email address" autocomplete="email" />
       <button id="submit-btn" type="submit">Get founding access</button>
     </form>
     <p id="error" class="error" hidden></p>
@@ -34,7 +34,7 @@ const microcopy = 'Stay up to date with the project, get founding access at laun
   <div id="success" class="success" hidden>
     <span class="success-check" aria-hidden="true">&#10003;</span>
     <div>
-      <div class="success-title">You&rsquo;re in. Welcome, adventurer.</div>
+      <div class="success-title">Check your inbox, your first quest is waiting.</div>
       <p class="success-body">{successBody}</p>
     </div>
   </div>
@@ -46,8 +46,8 @@ const microcopy = 'Stay up to date with the project, get founding access at laun
         <p class="signup-body">{microcopy}</p>
       </div>
       <div class="signup-col">
-        <form id="signup-form" novalidate action="https://formspree.io/f/mgogaqvj" method="POST">
-          <input id="email" name="email" type="email" required placeholder="you@wherever.com" aria-label="Email address" autocomplete="email" />
+        <form id="signup-form" novalidate action="https://app.kit.com/forms/9801686/subscriptions" method="POST">
+          <input id="email" name="email_address" type="email" required placeholder="you@wherever.com" aria-label="Email address" autocomplete="email" />
           <button id="submit-btn" type="submit">Get founding access</button>
         </form>
         <p id="error" class="error" hidden></p>
@@ -57,7 +57,7 @@ const microcopy = 'Stay up to date with the project, get founding access at laun
     <div id="success" class="success" hidden>
       <span class="success-check" aria-hidden="true">&#10003;</span>
       <div>
-        <div class="success-title">You&rsquo;re in. Welcome, adventurer.</div>
+        <div class="success-title">Check your inbox, your first quest is waiting.</div>
         <p class="success-body">{successBody}</p>
       </div>
     </div>

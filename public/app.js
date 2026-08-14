@@ -4,11 +4,12 @@
    CONFIG: fill these in before launch.
    ============================================================ */
 const CONFIG = {
-  // REQUIRED for emails to actually store. Paste your capture endpoint here
-  // (Formspree / Buttondown / Kit-ConvertKit / your own backend).
-  // Formspree example: "https://formspree.io/f/xxxxxxxx"
+  // REQUIRED for emails to actually store. Kit's form endpoint — it expects the
+  // address under the field name `email_address` (see the POST below).
+  // Kit sends the double opt-in confirmation; nobody joins the list until they
+  // click through it.
   // Leave "" only for local testing — submit will fake success and warn.
-  formEndpoint: "https://formspree.io/f/mgogaqvj",
+  formEndpoint: "https://app.kit.com/forms/9801686/subscriptions",
 
   foundingSpots: 0,               // scarcity count; 0 hides the sentence
   handle: "@levely",                // X handle
@@ -80,7 +81,7 @@ form.addEventListener("submit", function (e) {
   fetch(CONFIG.formEndpoint, {
     method: "POST",
     headers: { "Accept": "application/json" },
-    body: new URLSearchParams({ email: email })
+    body: new URLSearchParams({ email_address: email })
   })
     .then(function (r) {
       if (!r.ok) throw new Error("bad status " + r.status);
