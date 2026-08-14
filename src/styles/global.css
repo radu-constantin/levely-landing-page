@@ -102,28 +102,22 @@ a:hover { color: #b6f8d3; }
   gap: 16px;
   flex: none;
 }
-.brand { display: flex; align-items: center; gap: 11px; }
-.brand-spark {
-  font-size: 16px;
-  color: #f2cf83;
-  text-shadow: 0 0 12px rgba(242,207,131,.7);
-}
+.brand { display: flex; align-items: center; }
+/* Flat fill, no gradient and no glow: gradient-filled text muddies Cinzel's
+   thin strokes and reads cheap at this size. */
 .brand-word {
   font-family: "Cinzel", serif;
   font-weight: 600;
   font-size: 22px;
-  letter-spacing: 0.14em;
-  background: linear-gradient(180deg, #fbe6bd, #e0b466);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  text-shadow: 0 0 24px rgba(242,207,131,.35);
+  letter-spacing: 0.18em;
+  color: #f2cf83;
 }
+/* Nav is interface, not branding — both items share the body sans so the
+   current-page pill and the plain link read as one set. */
 .badge {
-  font-family: "Cinzel", serif;
   font-weight: 600;
-  letter-spacing: 0.16em;
-  font-size: 10px;
+  letter-spacing: 0.1em;
+  font-size: 12px;
   padding: 6px 13px;
   border-radius: 99px;
   border: 1px solid rgba(242,207,131,.4);
@@ -354,10 +348,13 @@ a:hover { color: #b6f8d3; }
   min-height: 52px;
   padding: 0 22px;
   white-space: nowrap;
-  font-family: "Cinzel", serif;
+  /* UI type, not display type: Cinzel's stroke contrast goes muddy at button
+     size. Dark ink on the XP mint reads at ~11.5:1 — a white label needs a
+     much deeper green to stay legible. */
+  font-family: inherit;
   font-weight: 600;
-  letter-spacing: 0.04em;
-  font-size: 14px;
+  letter-spacing: 0.01em;
+  font-size: 15px;
   color: #08221a;
   background: linear-gradient(150deg, #5ff0a3, #22c072);
   border: none;
@@ -510,7 +507,8 @@ a:hover { color: #b6f8d3; }
 }
 .page-nav-link {
   font-size: 14px;
-  color: #c7c1dd;
+  font-weight: 500;
+  color: #e6e0f5;
   text-decoration: none;
 }
 .page-nav-link:hover { color: #f6f1ff; }
@@ -805,6 +803,9 @@ a.badge:hover { background: rgba(242,207,131,.12); color: #f2cf83; }
   border-left: 2px solid rgba(242,207,131,.35);
   font-family: "Cormorant Garamond", serif;
   font-style: italic;
+  /* Explicit: this block inherited weight 400 from the sans body and relied on
+     the browser resolving to the nearest loaded italic. Same render, no guess. */
+  font-weight: 500;
   font-size: clamp(18px, 2.2vw, 21px);
   line-height: 1.5;
   color: #d7d1ea;
